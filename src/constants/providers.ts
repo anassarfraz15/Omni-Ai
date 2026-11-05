@@ -1,0 +1,65 @@
+import { ProviderId, ProviderInfo } from '../types';
+
+export const PROVIDERS_CONFIG: Record<ProviderId, ProviderInfo> = {
+  chatgpt: {
+    id: 'chatgpt',
+    name: 'ChatGPT',
+    company: 'OpenAI',
+    defaultModel: 'gpt-4o',
+    accentColor: '#10a37f',
+    brandBg: 'rgba(16, 163, 127, 0.1)',
+    logo: 'OpenAI',
+    browserUrl: 'https://chatgpt.com',
+    availableModels: [
+      { id: 'gpt-4o', name: 'GPT-4o (Omni)', contextWindow: '128k', description: 'Flagship multimodal high-intelligence model' },
+      { id: 'gpt-4o-mini', name: 'GPT-4o Mini', contextWindow: '128k', description: 'Fast, lightweight model for everyday tasks' },
+      { id: 'o1', name: 'o1 Reasoning', contextWindow: '128k', description: 'Deep reasoning model for STEM and complex logic' },
+      { id: 'o3-mini', name: 'o3-mini', contextWindow: '200k', description: 'High-speed reasoning model' },
+    ],
+  },
+  gemini: {
+    id: 'gemini',
+    name: 'Gemini',
+    company: 'Google',
+    defaultModel: 'gemini-3.8-flash',
+    accentColor: '#38bdf8',
+    brandBg: 'rgba(56, 189, 248, 0.1)',
+    logo: 'Google',
+    browserUrl: 'https://gemini.google.com',
+    availableModels: [
+      { id: 'gemini-3.8-flash', name: 'Gemini 3.8 Flash', contextWindow: '1M', description: 'State-of-the-art frontier model with native reasoning' },
+      { id: 'gemini-3.1-flash-lite', name: 'Gemini 3.1 Flash-Lite', contextWindow: '1M', description: 'Ultra-low latency model for high-throughput speed' },
+      { id: 'gemini-4-argon', name: 'Gemini 4 Argon', contextWindow: '2M', description: 'Maximum intelligence for deeply complex coding & STEM' },
+    ],
+  },
+  claude: {
+    id: 'claude',
+    name: 'Claude',
+    company: 'Anthropic',
+    defaultModel: 'claude-3-7-sonnet-20250219',
+    accentColor: '#d97706',
+    brandBg: 'rgba(217, 119, 6, 0.1)',
+    logo: 'Anthropic',
+    browserUrl: 'https://claude.ai',
+    availableModels: [
+      { id: 'claude-3-7-sonnet-20250219', name: 'Claude 3.7 Sonnet', contextWindow: '200k', description: 'Hybrid reasoning and coding powerhouse' },
+      { id: 'claude-3-5-sonnet-20241022', name: 'Claude 3.5 Sonnet', contextWindow: '200k', description: 'Industry benchmark for nuanced writing and code' },
+      { id: 'claude-3-5-haiku-20241022', name: 'Claude 3.5 Haiku', contextWindow: '200k', description: 'Ultra-fast, responsive intelligence' },
+    ],
+  },
+  grok: {
+    id: 'grok',
+    name: 'Grok',
+    company: 'xAI',
+    defaultModel: 'grok-2-1212',
+    accentColor: '#ec4899',
+    brandBg: 'rgba(236, 72, 153, 0.1)',
+    logo: 'xAI',
+    browserUrl: 'https://grok.com',
+    availableModels: [
+      { id: 'grok-2-1212', name: 'Grok 2 (Latest)', contextWindow: '128k', description: 'Frontier model with real-time knowledge and reasoning' },
+      { id: 'grok-beta', name: 'Grok Beta', contextWindow: '128k', description: 'Fast experimental reasoning model' },
+      { id: 'grok-2-vision-1212', name: 'Grok 2 Vision', contextWindow: '128k', description: 'Multimodal vision and textual analysis' },
+    ],
+  },
+};

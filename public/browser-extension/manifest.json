@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "OMNIA AI — Local Browser Bridge",
+  "version": "1.0.1",
+  "description": "Private, zero-cookie local integration bridge for OMNIA AI multi-model comparison workspace.",
+  "permissions": [
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:*/*",
+        "http://127.0.0.1:*/*",
+        "https://*.run.app/*"
+      ],
+      "js": ["omnia_bridge.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://gemini.google.com/*",
+        "https://claude.ai/*",
+        "https://grok.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "OMNIA AI Local Bridge"
+  }
+}

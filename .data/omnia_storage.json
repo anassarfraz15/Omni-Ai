@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "conversations": [
+    {
+      "id": "test-conv-1",
+      "title": "Initial AI Comparison Benchmark",
+      "createdAt": "2026-11-05T14:00:00.000Z",
+      "updatedAt": "2026-11-05T22:55:11.476Z",
+      "requests": []
+    }
+  ],
+  "providerSettings": {
+    "chatgpt": {
+      "id": "chatgpt",
+      "connectionType": "api",
+      "selectedModel": "gpt-4o",
+      "apiKey": "",
+      "enabled": true,
+      "temperature": 0.7,
+      "maxTokens": 4096,
+      "systemPrompt": "You are ChatGPT by OpenAI. Provide direct, rigorous, and insightful answers.",
+      "browserSessionStatus": "not_connected"
+    },
+    "gemini": {
+      "id": "gemini",
+      "connectionType": "api",
+      "selectedModel": "gemini-3.8-flash",
+      "apiKey": "",
+      "enabled": true,
+      "temperature": 0.7,
+      "maxTokens": 4096,
+      "systemPrompt": "You are Gemini by Google. Provide helpful, accurate, well-structured, and comprehensive responses.",
+      "browserSessionStatus": "not_connected"
+    },
+    "claude": {
+      "id": "claude",
+      "connectionType": "api",
+      "selectedModel": "claude-3-7-sonnet-20250219",
+      "apiKey": "",
+      "enabled": true,
+      "temperature": 0.7,
+      "maxTokens": 4096,
+      "systemPrompt": "You are Claude by Anthropic. Provide nuanced, clear, thoughtful, and technically sound answers.",
+      "browserSessionStatus": "not_connected"
+    },
+    "grok": {
+      "id": "grok",
+      "connectionType": "api",
+      "selectedModel": "grok-2-1212",
+      "apiKey": "",
+      "enabled": true,
+      "temperature": 0.7,
+      "maxTokens": 4096,
+      "systemPrompt": "You are Grok by xAI. Provide direct, witty, truth-seeking, and mathematically precise responses.",
+      "browserSessionStatus": "not_connected"
+    }
+  },
+  "promptTemplates": [
+    {
+      "id": "template-1",
+      "title": "Distributed System Concurrency & Consensus",
+      "category": "Architecture",
+      "description": "Compare Raft, Paxos, and Vector Clocks under high-network partition scenarios.",
+      "prompt": "Compare Raft, Multi-Paxos, and Vector Clocks in a globally distributed database with high cross-region latency and frequent network partitions. Address: 1. Failure detection latency, 2. Split-brain prevention, 3. Read throughput tradeoffs under linearizable vs casual consistency. Provide concrete architectural diagrams or ASCII flows."
+    },
+    {
+      "id": "template-2",
+      "title": "Zero-Allocation TypeScript Parsing Algorithm",
+      "category": "Coding",
+      "description": "Write an optimized streaming token parser in TypeScript with zero buffer reallocations.",
+      "prompt": "Write an optimized token scanner in TypeScript for a nested JSON/JSONL stream that operates on an ArrayBuffer with zero heap memory allocations during parsing. Include benchmarks, byte offset traversal, and handle UTF-8 multi-byte boundary cases gracefully."
+    },
+    {
+      "id": "template-3",
+      "title": "Quantum Computing vs RSA Cryptography",
+      "category": "Reasoning",
+      "description": "Evaluate Shor algorithm impact on 2048-bit RSA and migration timelines to Post-Quantum Cryptography.",
+      "prompt": "Provide a rigorous technical breakdown of Shor algorithm applied to factoring a 2048-bit RSA key. What physical qubit count and logical error rates (surface codes) are theoretically required? What are the exact tradeoffs between Kyber/ML-KEM and classic ECDH?"
+    },
+    {
+      "id": "template-4",
+      "title": "Philosophical Nuance: Determinism & Free Agency",
+      "category": "Writing",
+      "description": "Compose an intellectual dialogue between Spinoza, Daniel Dennett, and a modern neuroscientist.",
+      "prompt": "Write an intellectually rigorous philosophical dialogue between Baruch Spinoza, Daniel Dennett (compatibilism), and a contemporary cognitive neuroscientist studying readiness potentials (Libet experiments). Focus on the definition of voluntary agency and moral culpability."
+    },
+    {
+      "id": "template-5",
+      "title": "Factual Accuracy: Microprocessor Vulnerabilities",
+      "category": "Fact-Checking",
+      "description": "Compare Meltdown, Spectre v1/v2, and Downfall across Intel, AMD, and ARM architectures.",
+      "prompt": "Detail the hardware transient execution mechanics behind Spectre (v1 bounds check bypass, v2 branch target injection), Meltdown (rogue data cache load), and Downfall (gather instruction leak). Which CPU generations of Intel, AMD, and ARM were vulnerable, and what was the measured performance cost of hardware vs OS microcode mitigations?"
+    }
+  ],
+  "lastUpdated": "2026-11-05T22:55:11.476Z"
+}

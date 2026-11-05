@@ -1,0 +1,6 @@
+{
+  "name": "OMNIA AI",
+  "description": "Private Multi-Model AI Comparison & Unified Chat Workspace. Compare ChatGPT, Gemini, Claude, and Grok simultaneously with local-first security.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

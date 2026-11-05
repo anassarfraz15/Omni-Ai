@@ -1,0 +1,996 @@
+# OMNIA AI
+## Private Multi-Model AI Comparison & Unified Chat Workspace
+### Complete Product Requirements and Development Instructions
+
+---
+
+# 1. PROJECT IDENTITY AND PURPOSE
+
+Build a complete, functional, premium-quality web application named **OMNIA AI**.
+
+OMNIA AI is a private, single-user AI comparison workspace designed exclusively for my personal and educational use.
+
+I want to use my existing accounts with four major AI platforms:
+
+1. ChatGPT by OpenAI
+2. Gemini by Google
+3. Claude by Anthropic
+4. Grok by xAI
+
+The primary purpose is to submit exactly one prompt to all four AI models simultaneously and receive four independent responses in a single interface.
+
+I want to compare their intelligence, reasoning, accuracy, writing quality, coding capabilities, creativity, response speed, and overall performance.
+
+This is NOT a public SaaS product.
+
+It is NOT a multi-user platform.
+
+It is NOT intended to be shared, sold, or provided as a service to other people.
+
+It is a private application running on my personal computer.
+
+### Core objective
+
+ONE PROMPT → FOUR AI MODELS → FOUR INDEPENDENT RESPONSES → ONE COMPARISON WORKSPACE.
+
+The application must be genuinely functional, not just a visual prototype.
+
+---
+
+# 2. CRITICAL REQUIREMENT: PERSONAL-USE AND LOCAL-FIRST ARCHITECTURE
+
+Design the entire application around a local-first architecture.
+
+The application should run on my personal computer.
+
+Preferred configuration:
+
+- Localhost deployment.
+- Single-user access.
+- No public registration.
+- No user-management system.
+- No multi-tenant architecture.
+- No unnecessary cloud infrastructure.
+- No mandatory external database.
+- Local conversation storage.
+- Local settings and configurations.
+
+The application should be accessible through a local browser address, such as:
+
+http://localhost:3000
+
+Only my local computer should be able to access the application by default.
+
+Do not expose the development server to the public internet.
+
+Do not require a cloud account to operate the core application.
+
+Use a lightweight local database such as SQLite or an appropriate local storage solution for conversation history and application settings.
+
+The architecture should remain modular so that additional providers can be integrated in the future.
+
+---
+
+# 3. MOST IMPORTANT REQUIREMENT: LOCAL-ONLY BROWSER SESSION INTEGRATION
+
+I want the ability to connect my existing authenticated sessions for ChatGPT, Gemini, Claude, and Grok.
+
+I already have personal accounts on these platforms.
+
+I want the application to take advantage of my existing browser login sessions where technically and officially supported.
+
+However, session authentication must follow extremely strict security rules.
+
+## 3.1 Local-only authentication architecture
+
+Create a dedicated module named:
+
+LocalBrowserSessionAdapter
+
+Its purpose is to provide an optional connection to an already authenticated provider website through the user's local browser.
+
+The adapter must operate entirely on my personal computer.
+
+Requirements:
+
+1. Session information must never be uploaded to an application server.
+2. Raw cookies must never be transmitted to the backend.
+3. Raw cookies must never be stored in SQLite or another application database.
+4. Cookies must never be placed in localStorage or sessionStorage.
+5. Cookies must never appear in frontend JavaScript state.
+6. Authentication tokens must never appear in application logs.
+7. Passwords must never be requested or collected.
+8. The application must never ask me to copy and paste session cookies.
+9. The application must never export cookies into JSON, text files, or configuration files.
+10. No third-party analytics or tracking service may receive authentication information.
+
+### 3.2 Preferred browser-session implementation
+
+Use a local browser integration mechanism, preferably a dedicated browser extension or an isolated browser automation environment.
+
+The user should:
+
+1. Open the browser.
+2. Log into ChatGPT normally.
+3. Log into Gemini normally.
+4. Log into Claude normally.
+5. Log into Grok normally.
+6. Open OMNIA AI.
+7. Connect the already authenticated provider tabs using the supported local integration.
+
+The application should detect whether the corresponding provider interface is available and authenticated.
+
+Do not ask for account passwords.
+
+Do not build a cookie import form.
+
+Do not implement an arbitrary cookie extractor.
+
+### 3.3 Browser interaction method
+
+Where provider policies and supported integration mechanisms permit it, use the existing authenticated browser interface.
+
+The local integration may:
+
+- Identify the relevant provider tab.
+- Interact with supported visible interface elements.
+- Insert the user's prompt into the appropriate composer.
+- Submit the prompt.
+- Observe the rendered response.
+- Detect response completion.
+- Return the displayed response to the local comparison workspace.
+
+Prefer supported browser-extension APIs, documented integration mechanisms, or user-authorized browser automation.
+
+Do not read browser cookie stores.
+
+Do not use browser cookie APIs to export authentication credentials.
+
+Do not replay extracted session cookies against undocumented internal endpoints.
+
+Do not bypass CAPTCHAs, MFA, security checks, rate limits, or other provider protections.
+
+Respect the providers' terms and automation restrictions. If a provider does not permit this type of browser automation, disable that adapter and explain the limitation.
+
+### 3.4 Browser-session isolation
+
+Each provider must operate independently.
+
+For example:
+
+- ChatGPT adapter controls only the ChatGPT tab.
+- Gemini adapter controls only the Gemini tab.
+- Claude adapter controls only the Claude tab.
+- Grok adapter controls only the Grok tab.
+
+One adapter must never interfere with another provider's session.
+
+The application must not merge cookies or browser storage between providers.
+
+### 3.5 Session status detection
+
+Display the following statuses:
+
+- Connected.
+- Not connected.
+- Login required.
+- Session expired.
+- Provider unavailable.
+- Integration unsupported.
+- Waiting for response.
+- Generating.
+- Completed.
+- Failed.
+
+If a session expires, display:
+
+"Your session has expired. Please log in directly through your browser."
+
+Never request the user's password or authentication token.
+
+### 3.6 Local security verification
+
+Implement a security verification mechanism.
+
+Verify that:
+
+- No cookies are transmitted to localhost application backend routes.
+- No authentication credentials are included in application database records.
+- No secrets are exposed through browser console logs.
+- No credentials are included in exported conversations.
+- No external service receives browser-session information.
+- Browser integration communicates only through explicitly authorized local channels.
+
+The application should include a visible security information page explaining exactly what data is stored locally and what data leaves the computer.
+
+---
+
+# 4. OFFICIAL API CONNECTIONS
+
+Browser-session integration should be optional.
+
+Implement official API integrations as an alternative connection method.
+
+Supported providers:
+
+- OpenAI API.
+- Google Gemini API.
+- Anthropic API.
+- xAI API.
+
+Create separate provider adapters.
+
+Allow the user to enter their API keys through a local settings page.
+
+API keys must:
+
+- Be stored locally.
+- Be encrypted at rest where feasible.
+- Never be included in frontend responses.
+- Never be written into logs.
+- Never be included in exported files.
+- Never be sent to any service other than their intended provider.
+
+Provide:
+
+- Add API key.
+- Validate connection.
+- Update API key.
+- Remove API key.
+- Test provider.
+- Display connection status.
+
+Never assume that a consumer subscription includes API credits.
+
+Clearly distinguish browser-session access from API-based access.
+
+The user should be able to select the connection method for each provider independently.
+
+---
+
+# 5. MAIN APPLICATION INTERFACE
+
+Create a professional, modern interface inspired by:
+
+- ChatGPT.
+- Claude.
+- Perplexity.
+- Linear.
+- Raycast.
+
+Design requirements:
+
+- Minimal.
+- Premium.
+- Fast.
+- Clean.
+- Dark mode by default.
+- Optional light mode.
+- Responsive.
+- Smooth interactions.
+- Excellent typography.
+- No unnecessary visual clutter.
+- No excessive gradients.
+- No excessive glassmorphism.
+
+Use Next.js, React, TypeScript, Tailwind CSS, and shadcn/ui.
+
+## Main layout
+
+### Left sidebar
+
+Include:
+
+- OMNIA AI logo.
+- New Comparison.
+- Conversation History.
+- Saved Comparisons.
+- Prompt Library.
+- Favorites.
+- Provider Connections.
+- Model Settings.
+- Application Settings.
+- Security Center.
+- Theme Toggle.
+
+Allow the sidebar to collapse.
+
+### Main workspace
+
+Display:
+
+- Current conversation title.
+- Active providers.
+- Connection indicators.
+- Comparison layout controls.
+- Export functionality.
+- Comparison analysis button.
+
+### Four-model comparison grid
+
+Default desktop arrangement:
+
+| ChatGPT | Gemini |
+|---|---|
+| Claude | Grok |
+
+Each panel should have:
+
+- Provider logo.
+- Model name.
+- Model selection.
+- Connection status.
+- Response area.
+- Generation indicator.
+- Response time.
+- Token usage where available.
+- Copy response.
+- Regenerate response.
+- Stop generation.
+- Expand response.
+- Clear conversation.
+
+Allow individual panels to be expanded into a full-screen reading view.
+
+---
+
+# 6. UNIFIED PROMPT COMPOSER
+
+Create a single central prompt input.
+
+This is the primary control of the application.
+
+Features:
+
+- Large multiline input.
+- Send button.
+- Attachment support.
+- Model selection.
+- Character counter.
+- Stop generation.
+- Keyboard shortcuts.
+
+Keyboard shortcuts:
+
+- Enter: Send.
+- Shift + Enter: New line.
+- Ctrl/Cmd + Enter: Send.
+
+Allow selection of:
+
+- All four models.
+- Any three models.
+- Any two models.
+- One individual model.
+
+The application must send exactly the same user-entered prompt to every selected provider.
+
+Never automatically rewrite, summarize, translate, or alter the prompt.
+
+Display the original prompt in the conversation history.
+
+---
+
+# 7. SIMULTANEOUS REQUEST EXECUTION
+
+This is the application's most important functional requirement.
+
+When I click Send:
+
+1. Capture the original prompt.
+2. Capture selected providers.
+3. Create a unique comparison request ID.
+4. Dispatch requests concurrently.
+5. Begin independent response handling.
+6. Stream responses into their respective panels.
+7. Track completion independently.
+8. Handle failures independently.
+
+Use Promise.allSettled or an equivalent concurrent execution strategy.
+
+Never use sequential execution.
+
+For example:
+
+Incorrect:
+- Send to ChatGPT.
+- Wait for ChatGPT.
+- Send to Gemini.
+- Wait for Gemini.
+- Send to Claude.
+- Wait for Claude.
+
+Correct:
+- Start ChatGPT.
+- Start Gemini.
+- Start Claude.
+- Start Grok.
+- Process all responses independently.
+
+A failed provider must never stop the other providers.
+
+Maintain an exact copy of the original prompt and use it for every request.
+
+Implement a prompt hash to verify consistency.
+
+Where provider-specific system instructions are used, clearly distinguish them from the shared user prompt.
+
+---
+
+# 8. INDEPENDENT CONVERSATION HISTORIES
+
+Each provider must maintain its own conversation history.
+
+Example:
+
+ChatGPT:
+- User message 1.
+- ChatGPT response 1.
+- User message 2.
+- ChatGPT response 2.
+
+Gemini:
+- User message 1.
+- Gemini response 1.
+- User message 2.
+- Gemini response 2.
+
+Claude:
+- User message 1.
+- Claude response 1.
+- User message 2.
+- Claude response 2.
+
+Grok:
+- User message 1.
+- Grok response 1.
+- User message 2.
+- Grok response 2.
+
+Never combine different providers' conversation histories.
+
+Implement three follow-up modes:
+
+1. Send to all selected models.
+2. Send to an individual model.
+3. Send to a custom selection of models.
+
+When sending a follow-up to all four, each provider must receive its own independent previous conversation plus the identical new message.
+
+For browser-session adapters, preserve context within the corresponding provider's own browser conversation.
+
+Do not silently start a new conversation when a continuation is expected.
+
+---
+
+# 9. REAL-TIME RESPONSE STREAMING
+
+Implement independent response streaming.
+
+Where supported by the official APIs, use native streaming.
+
+For browser-session adapters, display new content as it becomes available in the provider's rendered interface, provided the integration method is permitted.
+
+Each panel must independently display:
+
+- Waiting.
+- Connecting.
+- Generating.
+- Completed.
+- Failed.
+- Cancelled.
+
+Implement individual cancellation.
+
+Implement individual retries.
+
+Do not freeze the interface when one model takes longer.
+
+Never automatically regenerate all responses when only one provider fails.
+
+---
+
+# 10. RESPONSE COMPARISON SYSTEM
+
+Implement the following comparison tools.
+
+### Basic comparison
+
+- Side-by-side responses.
+- Copy individual response.
+- Copy all responses.
+- Download individual responses.
+- Download complete comparison.
+- Expand individual response.
+- Search within responses.
+- Compare response lengths.
+- Compare generation times.
+- Compare token counts where available.
+
+### Advanced comparison
+
+Implement an optional feature called:
+
+COMPARE & ANALYZE
+
+When requested, analyze the completed responses.
+
+Identify:
+
+1. Areas where all models agree.
+2. Areas where models disagree.
+3. Unique insights from each model.
+4. Missing information.
+5. Contradictory claims.
+6. Potential factual inaccuracies.
+7. Best explanation.
+8. Best technical response.
+9. Strongest reasoning.
+10. Overall strengths and weaknesses.
+
+The analysis must be optional.
+
+Never automatically submit private conversation content to another provider.
+
+Clearly explain which model will perform the analysis before sending the data.
+
+Do not present AI-generated judgments as independently verified facts.
+
+---
+
+# 11. LOCAL CONVERSATION STORAGE
+
+Since this is a personal application, prioritize local storage.
+
+Use SQLite.
+
+Suggested database structure:
+
+### conversations
+- id
+- title
+- created_at
+- updated_at
+
+### comparison_requests
+- id
+- conversation_id
+- original_prompt
+- prompt_hash
+- created_at
+
+### model_responses
+- id
+- comparison_request_id
+- provider
+- model_id
+- content
+- status
+- duration_ms
+- input_tokens
+- output_tokens
+- error_message
+- created_at
+
+### provider_settings
+- id
+- provider
+- connection_type
+- selected_model
+- enabled
+- created_at
+- updated_at
+
+Do not store cookies, raw authentication tokens, or passwords in any table.
+
+Store API credentials separately using an appropriate local secret-management mechanism.
+
+Implement:
+
+- Conversation persistence.
+- Automatic saving.
+- Search.
+- Rename.
+- Delete.
+- Duplicate.
+- Archive.
+- Export.
+- Import.
+
+Add an option to delete all local application data.
+
+---
+
+# 12. MODEL MANAGEMENT
+
+Allow dynamic model selection.
+
+The user should be able to select available models for each provider.
+
+Create separate model configuration menus for:
+
+- ChatGPT.
+- Gemini.
+- Claude.
+- Grok.
+
+Display available model names and identifiers.
+
+Use official provider model-listing APIs where available.
+
+For browser-based integrations, only show models that are actually available in the authenticated interface.
+
+Never invent model names or capabilities.
+
+Allow configuration of:
+
+- Model.
+- Temperature, when supported.
+- Maximum output tokens, when supported.
+- Top-p, when supported.
+- Custom system instructions.
+- Reasoning settings, when supported.
+
+Clearly indicate unsupported settings.
+
+---
+
+# 13. MARKDOWN AND CONTENT RENDERING
+
+AI responses must support:
+
+- Markdown.
+- Code blocks.
+- Syntax highlighting.
+- Tables.
+- Mathematical equations.
+- Lists.
+- Headings.
+- Links.
+- Inline formatting.
+- Copy-code buttons.
+
+Use a secure Markdown rendering library.
+
+Sanitize rendered content.
+
+Do not execute arbitrary HTML or JavaScript returned by AI providers.
+
+Make long responses easy to read.
+
+---
+
+# 14. ADVANCED FEATURES
+
+Prepare the application architecture for future additions:
+
+1. PDF attachments.
+2. Image attachments.
+3. Code comparison mode.
+4. Research comparison mode.
+5. Custom prompt templates.
+6. Response quality scoring.
+7. AI-generated summaries.
+8. Export to PDF.
+9. Export to Markdown.
+10. Export to JSON.
+11. Saved responses.
+12. Favorite comparisons.
+13. Custom model aliases.
+14. Response history.
+15. Individual model regeneration.
+16. Synchronized scrolling.
+17. Full-screen reading mode.
+
+Only enable capabilities supported by the relevant integration.
+
+---
+
+# 15. PRIVACY AND SECURITY CENTER
+
+Create a dedicated security page.
+
+Show:
+
+- Application running locally.
+- Local database status.
+- Provider connection status.
+- API credential storage status.
+- Browser integration status.
+- Last connection time.
+- Local data storage location.
+
+Include these privacy principles:
+
+1. No public user registration.
+2. No third-party accounts required for the application itself.
+3. No application-owned cloud database.
+4. No password collection.
+5. No cookie uploading.
+6. No authentication token exposure.
+7. No unnecessary analytics.
+8. No advertising trackers.
+9. No external telemetry by default.
+10. No public API endpoints.
+
+Implement local application authentication if needed to protect access on the computer.
+
+Bind the application server to localhost by default.
+
+Implement CSRF protection, appropriate origin checks, secure local communication, input validation, and protection against malicious browser content.
+
+Remember that prompts and responses sent through official provider APIs are still transmitted to those providers. Explain this clearly in the privacy page.
+
+Local-only session handling does not mean provider conversations themselves remain on the computer.
+
+---
+
+# 16. PERFORMANCE AND RELIABILITY
+
+The application must handle:
+
+- Large prompts.
+- Long responses.
+- Slow providers.
+- Provider outages.
+- Network interruptions.
+- Expired sessions.
+- Invalid API credentials.
+- Rate limits.
+- Context-window limitations.
+- Cancelled requests.
+- Malformed responses.
+
+Each provider must operate independently.
+
+Implement appropriate timeout controls.
+
+Avoid unnecessary polling.
+
+Prevent duplicate submissions.
+
+Prevent accidental repeated requests.
+
+Keep the user interface responsive throughout generation.
+
+---
+
+# 17. DEVELOPMENT STACK
+
+Preferred technology:
+
+Frontend:
+- Next.js.
+- React.
+- TypeScript.
+- Tailwind CSS.
+- shadcn/ui.
+- Lucide icons.
+
+Backend:
+- Node.js.
+- TypeScript.
+- Local API routes.
+- Independent provider adapters.
+- Concurrent request orchestration.
+
+Storage:
+- SQLite.
+- Local encrypted credential storage.
+
+Browser integration:
+- Dedicated browser extension where appropriate.
+- Local browser automation only where permitted.
+- Explicitly authorized local communication.
+
+Testing:
+- Vitest.
+- Playwright.
+
+Deployment:
+- Local development server.
+- Local production build.
+- Optional Docker-based local deployment.
+
+Do not introduce unnecessary infrastructure.
+
+---
+
+# 18. TESTING REQUIREMENTS
+
+Before declaring the project complete, perform these tests.
+
+### Core functionality
+
+TEST 1: Send one prompt to all four providers.
+
+TEST 2: Verify concurrent execution.
+
+TEST 3: Verify identical prompt content.
+
+TEST 4: Verify independent streaming.
+
+TEST 5: Verify independent conversation history.
+
+TEST 6: Verify individual follow-ups.
+
+TEST 7: Verify shared follow-ups.
+
+TEST 8: Verify individual regeneration.
+
+TEST 9: Verify cancellation.
+
+TEST 10: Verify persistent conversations.
+
+### Authentication and privacy
+
+TEST 11: Verify no password collection.
+
+TEST 12: Verify no cookie extraction.
+
+TEST 13: Verify no cookies transmitted to backend routes.
+
+TEST 14: Verify no authentication tokens in logs.
+
+TEST 15: Verify no credentials in SQLite.
+
+TEST 16: Verify no credentials in exported files.
+
+TEST 17: Verify no unauthorized external telemetry.
+
+TEST 18: Verify local-only application access.
+
+TEST 19: Verify that expired browser sessions are handled safely.
+
+### User interface
+
+TEST 20: Verify four-panel desktop layout.
+
+TEST 21: Verify mobile layout.
+
+TEST 22: Verify Markdown rendering.
+
+TEST 23: Verify code highlighting.
+
+TEST 24: Verify long responses.
+
+TEST 25: Verify comparison analysis.
+
+Fix all critical issues before completion.
+
+---
+
+# 19. DEVELOPMENT EXECUTION PLAN
+
+Build the application in the following phases.
+
+PHASE 1: Foundation
+- Initialize project.
+- Configure TypeScript.
+- Set up local storage.
+- Create project architecture.
+- Implement security foundations.
+
+PHASE 2: Interface
+- Create sidebar.
+- Create main workspace.
+- Build four response panels.
+- Build prompt composer.
+- Implement responsive design.
+
+PHASE 3: Provider integrations
+- Implement official OpenAI integration.
+- Implement Gemini integration.
+- Implement Claude integration.
+- Implement Grok integration.
+
+PHASE 4: Local browser integration
+- Design local-only browser adapter.
+- Implement supported browser communication.
+- Detect existing authenticated sessions without extracting credentials.
+- Implement provider tab selection.
+- Implement permitted UI interaction.
+- Implement response observation.
+- Test session expiration.
+- Enforce local-only communication.
+
+If a provider prohibits browser automation or does not expose a supported integration method, leave that adapter disabled and explain why. Do not work around the restriction using undocumented private endpoints.
+
+PHASE 5: Comparison engine
+- Implement concurrent requests.
+- Implement independent streaming.
+- Implement retries.
+- Implement cancellation.
+- Implement fault isolation.
+
+PHASE 6: Conversation system
+- Implement separate histories.
+- Implement follow-ups.
+- Implement persistent storage.
+- Implement conversation management.
+
+PHASE 7: Advanced tools
+- Implement response comparison.
+- Implement optional AI analysis.
+- Implement export.
+- Implement prompt library.
+
+PHASE 8: Security audit
+- Test local-only behavior.
+- Audit storage.
+- Audit browser integration.
+- Check credential exposure.
+- Verify application isolation.
+
+PHASE 9: Final testing
+- Test all workflows.
+- Fix bugs.
+- Optimize performance.
+- Prepare local installation instructions.
+
+---
+
+# 20. FINAL DELIVERY REQUIREMENTS
+
+Deliver:
+
+1. Complete source code.
+2. Functional frontend.
+3. Functional local backend.
+4. Provider adapters.
+5. Browser integration component where permitted.
+6. Local database.
+7. Secure credential management.
+8. Environment configuration example.
+9. Installation instructions.
+10. README documentation.
+11. Testing instructions.
+12. Local deployment instructions.
+
+Provide clear setup instructions for Windows.
+
+The application must be easy to install and run on my personal computer.
+
+I should not need advanced server administration knowledge.
+
+Provide commands for:
+
+- Installing dependencies.
+- Configuring providers.
+- Starting the application.
+- Stopping the application.
+- Building the production version.
+- Backing up local data.
+
+Do not claim a provider integration is complete until it has been tested against the actual provider.
+
+Do not replace real integrations with mock responses.
+
+If an integration is unavailable, communicate that limitation honestly.
+
+---
+
+# FINAL PRODUCT VISION
+
+I want OMNIA AI to become my personal AI research laboratory.
+
+I should be able to open one application, write one prompt, send it to ChatGPT, Gemini, Claude, and Grok, and watch all four models independently generate their answers.
+
+I should be able to compare those answers, ask follow-up questions, inspect differences, and save my research.
+
+The entire application should be private, locally operated, and designed exclusively for my personal educational use.
+
+**MOST IMPORTANT:**
+
+- One prompt for all selected models.
+- Four independent conversations.
+- Simultaneous execution.
+- Real-time response display.
+- Local-first architecture.
+- Optional local browser-session integration.
+- No password collection.
+- No cookie uploading.
+- No authentication token exposure.
+- No unnecessary cloud infrastructure.
+
+Build a polished, genuinely functional application that meets these requirements. Prioritize correctness, privacy, reliability, and user experience over unnecessary complexity.
